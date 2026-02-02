@@ -1,15 +1,13 @@
-name: CI Pipeline
+name: CI-CD Pipeline
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-test:
+  test:
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -17,17 +15,43 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r app/requirements.txt
-          python -m pip install pytest
+          pip install -r app/requirements.txt
+          pip install pytest
 
       - name: Run tests
         run: |
-          cd app
-          pytest
+          pytest app
+
+  docker:
+    name: Build & Push Docker Image
+    needs: test   # 🔥 VERY IMPORTANT
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app
+          push: true
+          tags: |
+            prasanna542docker/devops-ci-cd-app:latest
+            prasanna542docker/devops-ci-cd-app:${{ github.sha }}
