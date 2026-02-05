@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Disable SSH host key checking
+        run: |
+          echo "ANSIBLE_HOST_KEY_CHECKING=False" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v4
 
