@@ -124,12 +124,15 @@ ansible/deploy.yml
 
 ### 📂 Repository Structure
 
-.github/workflows/   # CI & CD pipelines
-app/                # Application source code & Dockerfile
-terraform/          # AWS infrastructure provisioning
-ansible/            # Deployment automation
-diagrams/           # Architecture diagram
-README.md
+```text
+.
+├── .github/
+│   └── workflows/        # CI & CD pipelines
+├── app/                  # Application source code & Dockerfile
+├── terraform/            # AWS infrastructure provisioning
+├── ansible/              # Deployment automation
+├── diagrams/             # Architecture diagrams
+└── README.md
 
 ---
 
