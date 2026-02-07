@@ -73,11 +73,8 @@ The CD pipeline is triggered automatically after CI completes successfully.
 **CD pipeline tasks:**
 
 - Checkout repository
-
 - Install Ansible on GitHub runner
-
 - Configure SSH using GitHub Secrets
-
 - Run Ansible playbook to deploy application
 
 **Workflow file:**
@@ -92,15 +89,10 @@ Ansible is responsible for configuring the EC2 instance and deploying the applic
 **Ansible playbook tasks:**
 
 - Install Docker on EC2
-
 - Start Docker service
-
 - Add user to Docker group
-
 - Pull Docker image from Docker Hub
-
 - Stop old container (if running)
-
 - Run new application container
 
 **Playbook file:**
@@ -109,57 +101,63 @@ ansible/deploy.yml
 ✔ Fully automated deployment
 ✔ No manual server intervention
 
-📦 Application Deployment Flow
-Developer pushes code to GitHub
+---
 
-CI pipeline runs tests and builds Docker image
+### 📦 Application Deployment Flow
 
-Docker image is pushed to Docker Hub
+- **Developer pushes code to GitHub**
+- **CI pipeline runs tests and builds Docker image**
+- **Docker image is pushed to Docker Hub**
+- **CD pipeline triggers automatically**
+- **Ansible deploys the Docker container on EC2**
+- **Application becomes accessible via EC2 public IP**
+---
 
-CD pipeline triggers automatically
+### 🔐 Security Best Practices
 
-Ansible deploys the Docker container on EC2
+- **SSH private key stored securely in GitHub Secrets**
+- **Docker Hub credentials stored as GitHub Secrets**
+- **No secrets committed to the repository**
+- **Infrastructure managed using code (IaC)**
 
-Application becomes accessible via EC2 public IP
+---
 
-🔐 Security Best Practices
-SSH private key stored securely in GitHub Secrets
+### 📂 Repository Structure
 
-Docker Hub credentials stored as GitHub Secrets
-
-No secrets committed to the repository
-
-Infrastructure managed using code (IaC)
-
-📂 Repository Structure
 .github/workflows/   # CI & CD pipelines
 app/                # Application source code & Dockerfile
 terraform/          # AWS infrastructure provisioning
 ansible/            # Deployment automation
 diagrams/           # Architecture diagram
 README.md
-✅ Key Learnings
-Designing CI/CD pipelines end-to-end
 
-Automating infrastructure with Terraform
+---
 
-Deploying containerized applications using Ansible
+### ✅ Key Learnings
 
-Secure secret handling in GitHub Actions
+- **Designing CI/CD pipelines end-to-end**
+- **Automating infrastructure with Terraform**
+- **Deploying containerized applications using Ansible**
+- **Secure secret handling in GitHub Actions**
+- **Debugging real-world CI/CD and deployment issues**
 
-Debugging real-world CI/CD and deployment issues
+---
 
-📌 Future Enhancements
-Add rollback strategy
+### 📌 Future Enhancements
 
-Add monitoring and alerting
+- Add rollback strategy
+- Add monitoring and alerting
+- Introduce Load Balancer (ALB)
+- Add Docker image versioning
+- Migrate deployment to Kubernetes
 
-Introduce Load Balancer (ALB)
+---
 
-Add Docker image versioning
+## 👨‍💻 Author
 
-Migrate deployment to Kubernetes
+**Prasanna Pawar**  
+Aspiring DevOps Engineer 🚀  
 
-👨‍💻 Author
-Prasanna Pawar
-Aspiring DevOps Engineer 🚀
+- Passionate about CI/CD, Cloud & Automation  
+- Building real-world DevOps projects  
+- Actively learning and experimenting with modern DevOps tools
